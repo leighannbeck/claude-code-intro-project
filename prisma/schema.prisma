@@ -1,0 +1,170 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// User model for authentication and profile
+model User {
+  id            String    @id @default(cuid())
+  username      String    @unique
+  email         String    @unique
+  password      String
+  createdAt     DateTime  @default(now())
+  lastLogin     DateTime?
+
+  // Relations
+  accounts      Account[]
+  sessions      Session[]
+  gamePlayers   GamePlayer[]
+  gameMoves     GameMove[]
+  userStats     UserStats[]
+
+  @@map("users")
+}
+
+// NextAuth Account model
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+// NextAuth Session model
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+// Game room for multiplayer games
+model GameRoom {
+  id            String       @id @default(cuid())
+  roomCode      String       @unique
+  variant       GameVariant  // 4player or 6player
+  status        RoomStatus   @default(WAITING)
+  maxPlayers    Int
+  currentPlayers Int         @default(0)
+  createdBy     String
+  createdAt     DateTime     @default(now())
+
+  // Relations
+  players       GamePlayer[]
+  games         Game[]
+
+  @@map("game_rooms")
+}
+
+// Players in a game room
+model GamePlayer {
+  id          String    @id @default(cuid())
+  gameRoomId  String
+  userId      String
+  team        Int       // 1 or 2
+  position    Int       // 0-5 depending on variant
+  isReady     Boolean   @default(false)
+  joinedAt    DateTime  @default(now())
+
+  // Relations
+  gameRoom    GameRoom  @relation(fields: [gameRoomId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([gameRoomId, userId])
+  @@map("game_players")
+}
+
+// Completed games
+model Game {
+  id           String      @id @default(cuid())
+  gameRoomId   String
+  variant      GameVariant
+  startedAt    DateTime    @default(now())
+  endedAt      DateTime?
+  winningTeam  Int?
+  team1Score   Int         @default(0)
+  team2Score   Int         @default(0)
+  gameLog      Json?       // Full game state history
+
+  // Relations
+  gameRoom     GameRoom    @relation(fields: [gameRoomId], references: [id], onDelete: Cascade)
+  moves        GameMove[]
+
+  @@map("games")
+}
+
+// Individual moves in a game
+model GameMove {
+  id         String    @id @default(cuid())
+  gameId     String
+  playerId   String
+  moveNumber Int
+  moveType   MoveType  // bid, meld, play
+  moveData   Json      // Card data, bid amount, etc.
+  timestamp  DateTime  @default(now())
+
+  // Relations
+  game       Game      @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  player     User      @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@map("game_moves")
+}
+
+// User statistics per variant
+model UserStats {
+  id              String      @id @default(cuid())
+  userId          String
+  variant         GameVariant
+  gamesPlayed     Int         @default(0)
+  wins            Int         @default(0)
+  losses          Int         @default(0)
+  totalPoints     Int         @default(0)
+  highestBid      Int         @default(0)
+
+  // Relations
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, variant])
+  @@map("user_stats")
+}
+
+// Enums
+enum GameVariant {
+  FOUR_PLAYER
+  SIX_PLAYER
+}
+
+enum RoomStatus {
+  WAITING
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum MoveType {
+  BID
+  PASS
+  MELD
+  PLAY
+}
