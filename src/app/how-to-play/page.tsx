@@ -2,249 +2,349 @@ import Link from "next/link"
 
 export default function HowToPlayPage() {
   return (
-    <div className="bg-gray-50 min-h-screen py-12">
+    <div className="bg-gradient-to-br from-green-900 via-green-800 to-green-900 min-h-screen py-12">
       <div className="container mx-auto px-4 max-w-4xl">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8">How to Play Pinochle</h1>
+        {/* Page Title Card */}
+        <div className="bg-white rounded-xl shadow-2xl p-8 mb-8 border-8 border-blue-700 relative">
+          <div className="absolute top-2 left-2 text-red-600 text-3xl">♦</div>
+          <div className="absolute top-2 right-2 text-green-700 text-3xl">♣</div>
+          <h1 className="text-5xl font-bold text-gray-900 text-center">How to Play Pinochle</h1>
+        </div>
 
-        <div className="bg-blue-100 border-l-4 border-blue-500 p-6 mb-8">
-          <p className="text-gray-800">
-            <span className="font-semibold">New to Pinochle?</span> This guide will walk you through your first game step by step. For complete rules and scoring details, visit our <Link href="/rules" className="text-blue-600 hover:text-blue-800 underline">Rules page</Link>.
+        {/* Intro Box */}
+        <div className="bg-blue-100 border-8 border-blue-600 rounded-xl p-6 mb-8 shadow-xl">
+          <p className="text-gray-900 font-semibold text-lg text-center">
+            <span className="text-blue-700 text-xl">♠</span> New to Pinochle? <span className="text-blue-700 text-xl">♠</span>
+            <br />
+            This guide will walk you through your first game step by step.
+            <br />
+            For complete rules and scoring details, visit our <Link href="/rules" className="text-blue-700 hover:text-blue-900 underline font-bold">Rules page</Link>.
           </p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-8 mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">What You Need to Know</h2>
+        {/* What You Need to Know */}
+        <div className="bg-white rounded-lg shadow-xl p-8 mb-8 border-4 border-red-700">
+          <h2 className="text-3xl font-bold text-red-900 mb-6 border-b-4 border-blue-600 pb-2">
+            ♥ What You Need to Know
+          </h2>
 
-          <div className="space-y-4">
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">The Basics</h3>
-              <ul className="list-disc list-inside text-gray-700 space-y-2 ml-4">
-                <li><span className="font-semibold">Teams:</span> Pinochle is played in teams of 2 (4-player) or 3 (6-player)</li>
-                <li><span className="font-semibold">Goal:</span> Be the first team to reach 500 (or 1000) points</li>
-                <li><span className="font-semibold">How to Score:</span> Through melding (card combinations) and winning tricks</li>
-                <li><span className="font-semibold">The Deck:</span> 48 cards with duplicates (two of each 9, 10, J, Q, K, A in all suits)</li>
-              </ul>
-            </div>
+          <div className="bg-red-50 p-6 rounded-lg border-4 border-red-600">
+            <h3 className="text-2xl font-bold text-red-900 mb-4">The Basics</h3>
+            <ul className="list-none text-gray-900 space-y-3 text-lg font-medium">
+              <li className="flex items-start">
+                <span className="text-red-600 mr-3 text-2xl">♥</span>
+                <span><span className="font-bold">Teams:</span> Pinochle is played in teams of 2. In 4-player there are 2 teams, in 6-player there are 3 teams</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-blue-600 mr-3 text-2xl">♠</span>
+                <span><span className="font-bold">Goal:</span> Be the first team to reach 500 points (default)</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-red-600 mr-3 text-2xl">♦</span>
+                <span><span className="font-bold">How to Score:</span> Through melding (card combinations) AND winning tricks</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-green-700 mr-3 text-2xl">♣</span>
+                <span><span className="font-bold">The Deck:</span> Multiple decks without 9s (4-player uses 2 decks = 80 cards, 6-player uses 3 decks = 120 cards)</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-blue-600 mr-3 text-2xl">♠</span>
+                <span><span className="font-bold text-blue-700">Key Rule:</span> 10s are the SECOND highest cards (they beat Kings!)</span>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-8 mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Step-by-Step: Your First Game</h2>
+        {/* Step-by-Step Guide */}
+        <div className="bg-white rounded-lg shadow-xl p-8 mb-8 border-4 border-green-700">
+          <h2 className="text-3xl font-bold text-green-900 mb-6 border-b-4 border-red-600 pb-2">
+            ♣ Step-by-Step: Your First Game
+          </h2>
 
           <div className="space-y-8">
-            <div className="border-l-4 border-blue-500 pl-6">
-              <div className="flex items-center mb-2">
-                <span className="bg-blue-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center mr-3">1</span>
-                <h3 className="text-xl font-semibold text-gray-900">Getting Your Cards</h3>
+            {/* Step 1 */}
+            <div className="border-l-8 border-blue-600 pl-6 bg-blue-50 p-6 rounded-r-lg">
+              <div className="flex items-center mb-4">
+                <span className="bg-blue-600 text-white font-bold rounded-full w-12 h-12 flex items-center justify-center mr-4 text-2xl shadow-lg">1</span>
+                <h3 className="text-2xl font-bold text-blue-900">Getting Your Cards</h3>
               </div>
-              <p className="text-gray-700 mb-2">
-                The dealer gives everyone their cards. In 4-player Pinochle, you'll receive 12 cards. Look at your hand and organize it by suit.
+              <p className="text-gray-900 mb-3 text-lg font-medium">
+                The dealer gives everyone their cards <span className="font-bold text-blue-700">4 at a time</span>, clockwise. In 4-player Pinochle, you'll receive 12 cards. Look at your hand and organize it by suit.
               </p>
-              <div className="bg-gray-50 p-3 rounded">
-                <p className="text-sm text-gray-600"><span className="font-semibold">Tip:</span> Arrange your cards by suit to easily spot potential melds!</p>
+              <div className="bg-blue-100 p-4 rounded-lg border-2 border-blue-600">
+                <p className="text-gray-900 font-medium"><span className="font-bold text-blue-700">♠ Tip:</span> Arrange your cards by suit to easily spot potential melds! Look for marriages (K+Q) - you need at least one to bid.</p>
               </div>
             </div>
 
-            <div className="border-l-4 border-green-500 pl-6">
-              <div className="flex items-center mb-2">
-                <span className="bg-green-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center mr-3">2</span>
-                <h3 className="text-xl font-semibold text-gray-900">The Bidding Phase</h3>
+            {/* Step 2 */}
+            <div className="border-l-8 border-green-700 pl-6 bg-green-50 p-6 rounded-r-lg">
+              <div className="flex items-center mb-4">
+                <span className="bg-green-700 text-white font-bold rounded-full w-12 h-12 flex items-center justify-center mr-4 text-2xl shadow-lg">2</span>
+                <h3 className="text-2xl font-bold text-green-900">The Bidding Phase</h3>
               </div>
-              <p className="text-gray-700 mb-2">
-                Players take turns bidding or passing. A bid is your team's promise of how many points you'll score this round.
+              <p className="text-gray-900 mb-3 text-lg font-medium">
+                Players take turns bidding or passing. A bid is your team's promise of how many TOTAL points (meld + tricks) you'll score this round.
               </p>
-              <ul className="list-disc list-inside text-gray-700 space-y-1 ml-4 mb-2">
-                <li>Bidding starts at 20 (or 25) and goes up by 1</li>
-                <li>Look at your potential melds before bidding</li>
-                <li>If you pass, you're out of the bidding</li>
-                <li>The highest bidder wins and chooses trump</li>
+              <ul className="list-none text-gray-900 space-y-2 mb-3 text-lg font-medium">
+                <li className="flex items-start"><span className="text-green-700 mr-2">♣</span><span><span className="font-bold">Minimum bid: 50</span></span></li>
+                <li className="flex items-start"><span className="text-green-700 mr-2">♣</span><span>Below 60: Increase by any amount</span></li>
+                <li className="flex items-start"><span className="text-green-700 mr-2">♣</span><span>At 60+: Must increase by 5</span></li>
+                <li className="flex items-start"><span className="text-green-700 mr-2">♣</span><span>No maximum bid</span></li>
+                <li className="flex items-start"><span className="text-red-600 mr-2">♥</span><span className="font-bold text-red-700">Must have at least one marriage (K+Q) to bid!</span></li>
+                <li className="flex items-start"><span className="text-green-700 mr-2">♣</span><span>If you pass, you're out of the bidding</span></li>
+                <li className="flex items-start"><span className="text-green-700 mr-2">♣</span><span>The highest bidder wins and chooses trump</span></li>
               </ul>
-              <div className="bg-gray-50 p-3 rounded">
-                <p className="text-sm text-gray-600"><span className="font-semibold">Beginner Tip:</span> Start conservative! Count your meld points first. If you have 8-10 meld points, a bid around 25-30 is reasonable.</p>
+              <div className="bg-green-100 p-4 rounded-lg border-2 border-green-700">
+                <p className="text-gray-900 font-medium"><span className="font-bold text-green-800">♣ Beginner Tip:</span> Count your meld points first. The first bid around the table traditionally signals meld: add +1 for every 10 meld points. Example: 20 meld = bid 52 (50 + 2).</p>
               </div>
             </div>
 
-            <div className="border-l-4 border-purple-500 pl-6">
-              <div className="flex items-center mb-2">
-                <span className="bg-purple-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center mr-3">3</span>
-                <h3 className="text-xl font-semibold text-gray-900">Declaring Trump</h3>
+            {/* Step 3 */}
+            <div className="border-l-8 border-purple-600 pl-6 bg-purple-50 p-6 rounded-r-lg">
+              <div className="flex items-center mb-4">
+                <span className="bg-purple-600 text-white font-bold rounded-full w-12 h-12 flex items-center justify-center mr-4 text-2xl shadow-lg">3</span>
+                <h3 className="text-2xl font-bold text-purple-900">Declaring Trump</h3>
               </div>
-              <p className="text-gray-700 mb-2">
+              <p className="text-gray-900 mb-3 text-lg font-medium">
                 The winning bidder names the trump suit. Trump cards beat all other suits.
               </p>
-              <div className="bg-gray-50 p-3 rounded">
-                <p className="text-sm text-gray-600"><span className="font-semibold">Tip:</span> Choose the suit where you have the most cards, especially high cards like Aces and 10s.</p>
+              <div className="bg-red-100 p-4 rounded-lg border-4 border-red-600">
+                <p className="text-red-900 font-bold text-lg mb-2">♥ CRITICAL:</p>
+                <p className="text-gray-900 font-medium">You can ONLY call trump in a suit where you have a marriage (K+Q). If you can't call trump, your team automatically goes set (negative bid amount)!</p>
               </div>
             </div>
 
-            <div className="border-l-4 border-yellow-500 pl-6">
-              <div className="flex items-center mb-2">
-                <span className="bg-yellow-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center mr-3">4</span>
-                <h3 className="text-xl font-semibold text-gray-900">Melding</h3>
+            {/* Step 4 */}
+            <div className="border-l-8 border-yellow-600 pl-6 bg-yellow-50 p-6 rounded-r-lg">
+              <div className="flex items-center mb-4">
+                <span className="bg-yellow-600 text-white font-bold rounded-full w-12 h-12 flex items-center justify-center mr-4 text-2xl shadow-lg">4</span>
+                <h3 className="text-2xl font-bold text-yellow-900">Melding</h3>
               </div>
-              <p className="text-gray-700 mb-3">
+              <p className="text-gray-900 mb-4 text-lg font-medium">
                 Everyone lays down their meld combinations to score points. Here are the most common melds beginners should look for:
               </p>
 
-              <div className="bg-blue-50 border border-blue-200 rounded p-4 mb-3">
-                <p className="font-semibold text-gray-900 mb-2">Easy Melds to Spot:</p>
-                <ul className="space-y-1 text-gray-700 text-sm">
-                  <li>• <span className="font-semibold">Marriage:</span> King + Queen of same suit (4 points in trump, 2 in other suits)</li>
-                  <li>• <span className="font-semibold">Pinochle:</span> Queen of Spades + Jack of Diamonds (4 points)</li>
-                  <li>• <span className="font-semibold">Aces Around:</span> One Ace of each suit (10 points)</li>
-                  <li>• <span className="font-semibold">Run:</span> A-10-K-Q-J all in trump (15 points - this is good!)</li>
+              <div className="bg-blue-100 border-4 border-blue-600 rounded-lg p-4 mb-4">
+                <p className="font-bold text-blue-900 mb-3 text-xl">♠ Easy Melds to Spot:</p>
+                <ul className="space-y-2 text-gray-900 font-medium text-lg">
+                  <li className="flex items-start"><span className="text-blue-600 mr-2">♠</span><span><span className="font-bold">Marriage:</span> King + Queen of same suit (4 points in trump, 2 in other suits)</span></li>
+                  <li className="flex items-start"><span className="text-blue-600 mr-2">♠</span><span><span className="font-bold">Pinochle:</span> Queen of Spades + Jack of Diamonds (4 points)</span></li>
+                  <li className="flex items-start"><span className="text-blue-600 mr-2">♠</span><span><span className="font-bold">Aces Around:</span> One Ace of each suit (10 points)</span></li>
+                  <li className="flex items-start"><span className="text-blue-600 mr-2">♠</span><span><span className="font-bold">Run:</span> A-10-K-Q-J all in trump (15 points - this is good!)</span></li>
                 </ul>
               </div>
 
-              <div className="bg-gray-50 p-3 rounded">
-                <p className="text-sm text-gray-600"><span className="font-semibold">Important:</span> You can use the same card in multiple melds! For example, a Queen can be part of both a marriage and "Queens Around".</p>
+              <div className="bg-purple-100 border-4 border-purple-600 rounded-lg p-4 mb-4">
+                <p className="font-bold text-purple-900 mb-3 text-xl">Advanced Melds (Worth a Lot!):</p>
+                <ul className="space-y-2 text-gray-900 font-medium text-lg">
+                  <li className="flex items-start"><span className="text-purple-600 mr-2">♦</span><span><span className="font-bold">Double Pinochle:</span> 2 Q♠ + 2 J♦ (30 points)</span></li>
+                  <li className="flex items-start"><span className="text-purple-600 mr-2">♦</span><span><span className="font-bold">Triple Pinochle:</span> 3 Q♠ + 3 J♦ (90 points!)</span></li>
+                  <li className="flex items-start"><span className="text-purple-600 mr-2">♦</span><span><span className="font-bold">Double Run:</span> Two A-10-K-Q-J in trump (150 points!)</span></li>
+                  <li className="flex items-start"><span className="text-purple-600 mr-2">♦</span><span><span className="font-bold">Double Aces/Kings/Queens/Jacks:</span> 2 of each rank in all suits (100/80/60/40 points)</span></li>
+                </ul>
+              </div>
+
+              <div className="bg-gray-100 p-4 rounded-lg border-2 border-gray-600">
+                <p className="text-gray-900 font-medium"><span className="font-bold">Important:</span> You can use the same card in multiple melds! For example, a Queen can be part of both a marriage and "Queens Around".</p>
               </div>
             </div>
 
-            <div className="border-l-4 border-red-500 pl-6">
-              <div className="flex items-center mb-2">
-                <span className="bg-red-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center mr-3">5</span>
-                <h3 className="text-xl font-semibold text-gray-900">Playing Tricks</h3>
+            {/* Step 5 */}
+            <div className="border-l-8 border-red-700 pl-6 bg-red-50 p-6 rounded-r-lg">
+              <div className="flex items-center mb-4">
+                <span className="bg-red-700 text-white font-bold rounded-full w-12 h-12 flex items-center justify-center mr-4 text-2xl shadow-lg">5</span>
+                <h3 className="text-2xl font-bold text-red-900">Playing Tricks</h3>
               </div>
-              <p className="text-gray-700 mb-2">
+              <p className="text-gray-900 mb-3 text-lg font-medium">
                 Now the real game begins! The bidder leads the first trick by playing any card.
               </p>
 
-              <div className="bg-yellow-50 border border-yellow-200 rounded p-4 mb-3">
-                <p className="font-semibold text-gray-900 mb-2">Rules for Playing:</p>
-                <ol className="space-y-2 text-gray-700 text-sm list-decimal list-inside">
-                  <li><span className="font-semibold">Follow Suit:</span> If someone plays Hearts, you must play Hearts if you have any</li>
-                  <li><span className="font-semibold">Play Higher:</span> If you can follow suit, you must try to play a higher card</li>
-                  <li><span className="font-semibold">Trump In:</span> If you can't follow suit, play trump if you have it</li>
-                  <li><span className="font-semibold">Otherwise:</span> If you can't follow suit or trump, play any card</li>
+              <div className="bg-yellow-100 border-4 border-yellow-600 rounded-lg p-4 mb-4">
+                <p className="font-bold text-yellow-900 mb-3 text-xl">Rules for Playing (STRICT):</p>
+                <ol className="space-y-2 text-gray-900 font-medium list-decimal list-inside">
+                  <li><span className="font-bold">Follow Suit:</span> If someone plays Hearts, you must play Hearts if you have any</li>
+                  <li><span className="font-bold">Must Beat:</span> If you CAN beat the current highest card, you MUST (even if it beats your partner!)</li>
+                  <li><span className="font-bold">Trump In:</span> If you can't follow suit, you MUST play trump if you have it</li>
+                  <li><span className="font-bold">Must Beat with Trump:</span> If you're playing trump and can beat, you must</li>
+                  <li><span className="font-bold">Otherwise:</span> Only if you can't follow suit or trump, play any card</li>
                 </ol>
               </div>
 
-              <p className="text-gray-700 mb-2">
-                <span className="font-semibold">Who wins the trick?</span> The highest card of the suit that was led, unless someone played trump (then highest trump wins).
+              <p className="text-gray-900 mb-3 text-lg font-medium">
+                <span className="font-bold text-red-700">♥ Who wins the trick?</span> The highest card of the suit that was led, unless someone played trump (then highest trump wins).
               </p>
 
-              <div className="bg-gray-50 p-3 rounded">
-                <p className="text-sm text-gray-600"><span className="font-semibold">Remember:</span> Card ranking is A, 10, K, Q, J, 9 (10 is higher than King!)</p>
+              <div className="bg-blue-100 p-4 rounded-lg mb-3 border-2 border-blue-600">
+                <p className="text-gray-900 font-bold text-lg mb-2">Card Ranking:</p>
+                <p className="text-gray-900 font-bold text-xl">A &gt; <span className="text-blue-700">10</span> &gt; K &gt; Q &gt; J</p>
+                <p className="text-red-700 font-bold mt-1">Remember: 10 is higher than King!</p>
+              </div>
+
+              <div className="bg-gray-100 p-4 rounded-lg border-2 border-gray-600">
+                <p className="text-gray-900 font-medium"><span className="font-bold">Tie-breaker:</span> If the same card is played twice (e.g., two A♠), the first one played wins the trick.</p>
               </div>
             </div>
 
-            <div className="border-l-4 border-indigo-500 pl-6">
-              <div className="flex items-center mb-2">
-                <span className="bg-indigo-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center mr-3">6</span>
-                <h3 className="text-xl font-semibold text-gray-900">Counting Points</h3>
+            {/* Step 6 */}
+            <div className="border-l-8 border-indigo-600 pl-6 bg-indigo-50 p-6 rounded-r-lg">
+              <div className="flex items-center mb-4">
+                <span className="bg-indigo-600 text-white font-bold rounded-full w-12 h-12 flex items-center justify-center mr-4 text-2xl shadow-lg">6</span>
+                <h3 className="text-2xl font-bold text-indigo-900">Counting Points</h3>
               </div>
-              <p className="text-gray-700 mb-3">
+              <p className="text-gray-900 mb-4 text-lg font-medium">
                 After all tricks are played, count your team's points:
               </p>
 
-              <div className="space-y-2 mb-3">
-                <div className="flex justify-between items-center bg-gray-50 p-2 rounded">
-                  <span className="text-gray-700">Meld points (from step 4)</span>
-                  <span className="font-semibold text-gray-900">+ Your melds</span>
+              <div className="space-y-3 mb-4">
+                <div className="flex justify-between items-center bg-red-100 p-3 rounded-lg border-2 border-red-600">
+                  <span className="text-gray-900 font-medium">Meld points (from step 4)</span>
+                  <span className="font-bold text-red-900 text-lg">+ Your melds</span>
                 </div>
-                <div className="flex justify-between items-center bg-gray-50 p-2 rounded">
-                  <span className="text-gray-700">Trick points (Aces, 10s, Kings = 1 each)</span>
-                  <span className="font-semibold text-gray-900">+ Trick cards</span>
+                <div className="flex justify-between items-center bg-blue-100 p-3 rounded-lg border-2 border-blue-600">
+                  <span className="text-gray-900 font-medium">Trick points (Aces, 10s, Kings = 1 each)</span>
+                  <span className="font-bold text-blue-900 text-lg">+ Trick cards</span>
                 </div>
-                <div className="flex justify-between items-center bg-gray-50 p-2 rounded">
-                  <span className="text-gray-700">Last trick bonus</span>
-                  <span className="font-semibold text-gray-900">+ 1 point</span>
+                <div className="flex justify-between items-center bg-green-100 p-3 rounded-lg border-2 border-green-600">
+                  <span className="text-gray-900 font-medium">Last trick bonus</span>
+                  <span className="font-bold text-green-900 text-lg">+ 2 pts (4-player) / 3 pts (6-player)</span>
                 </div>
-                <div className="flex justify-between items-center bg-blue-100 p-2 rounded border-2 border-blue-300">
-                  <span className="text-gray-900 font-semibold">= Total Team Score</span>
-                  <span className="font-bold text-blue-600">?? points</span>
+                <div className="flex justify-between items-center bg-purple-100 p-3 rounded-lg border-4 border-purple-600">
+                  <span className="text-purple-900 font-bold text-lg">= Total Team Score</span>
+                  <span className="font-bold text-purple-700 text-xl">?? points</span>
                 </div>
               </div>
 
-              <div className="bg-red-50 border border-red-200 rounded p-3">
-                <p className="text-sm text-gray-700"><span className="font-semibold">Critical Rule:</span> If the bidding team doesn't reach their bid, they score ZERO and lose the bid amount! This is called "going set."</p>
+              <div className="bg-red-100 border-4 border-red-600 rounded-lg p-4">
+                <p className="text-red-900 font-bold text-lg mb-2">♥ Critical Rule - Going "Set":</p>
+                <p className="text-gray-900 font-medium mb-2">If the bidding team's total (meld + tricks) is LESS than their bid, they score ZERO and their score goes DOWN by the bid amount (negative). This is called "going set."</p>
+                <p className="text-gray-900 font-medium">Example: Bid 60, scored 55 = -60 points!</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-8 mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Common Beginner Mistakes</h2>
+        {/* Common Beginner Mistakes */}
+        <div className="bg-white rounded-lg shadow-xl p-8 mb-8 border-4 border-red-700">
+          <h2 className="text-3xl font-bold text-red-900 mb-6 border-b-4 border-blue-600 pb-2">
+            ❌ Common Beginner Mistakes
+          </h2>
 
           <div className="space-y-4">
-            <div className="flex">
-              <span className="text-2xl mr-3">❌</span>
+            <div className="flex bg-red-50 p-4 rounded-lg border-l-4 border-red-600">
+              <span className="text-3xl mr-4">❌</span>
               <div>
-                <p className="font-semibold text-gray-900">Overbidding</p>
-                <p className="text-gray-700">Don't bid more than your melds + reasonable trick expectations. It's better to be safe!</p>
+                <p className="font-bold text-red-900 text-lg">Bidding without a marriage</p>
+                <p className="text-gray-900 font-medium">You MUST have at least one K+Q pair to bid. Check before bidding!</p>
               </div>
             </div>
 
-            <div className="flex">
-              <span className="text-2xl mr-3">❌</span>
+            <div className="flex bg-blue-50 p-4 rounded-lg border-l-4 border-blue-600">
+              <span className="text-3xl mr-4">❌</span>
               <div>
-                <p className="font-semibold text-gray-900">Forgetting to follow suit</p>
-                <p className="text-gray-700">Always follow the suit that was led if you have it in your hand.</p>
+                <p className="font-bold text-blue-900 text-lg">Calling trump in the wrong suit</p>
+                <p className="text-gray-900 font-medium">Can only call trump where you have K+Q. Choose wisely!</p>
               </div>
             </div>
 
-            <div className="flex">
-              <span className="text-2xl mr-3">❌</span>
+            <div className="flex bg-green-50 p-4 rounded-lg border-l-4 border-green-600">
+              <span className="text-3xl mr-4">❌</span>
               <div>
-                <p className="font-semibold text-gray-900">Not counting cards</p>
-                <p className="text-gray-700">Try to remember which cards have been played, especially high cards and trump.</p>
+                <p className="font-bold text-green-900 text-lg">Not beating when you can</p>
+                <p className="text-gray-900 font-medium">If you CAN beat the current highest card, you MUST - even if it beats your partner!</p>
               </div>
             </div>
 
-            <div className="flex">
-              <span className="text-2xl mr-3">❌</span>
+            <div className="flex bg-purple-50 p-4 rounded-lg border-l-4 border-purple-600">
+              <span className="text-3xl mr-4">❌</span>
               <div>
-                <p className="font-semibold text-gray-900">Playing alone</p>
-                <p className="text-gray-700">Work with your partner! Help them win tricks when they're trying to make the bid.</p>
+                <p className="font-bold text-purple-900 text-lg">Forgetting to follow suit</p>
+                <p className="text-gray-900 font-medium">Always follow the suit that was led if you have it in your hand.</p>
+              </div>
+            </div>
+
+            <div className="flex bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-600">
+              <span className="text-3xl mr-4">❌</span>
+              <div>
+                <p className="font-bold text-yellow-900 text-lg">Thinking Kings beat 10s</p>
+                <p className="text-gray-900 font-medium">10s are the SECOND highest cards! A &gt; 10 &gt; K &gt; Q &gt; J</p>
+              </div>
+            </div>
+
+            <div className="flex bg-red-50 p-4 rounded-lg border-l-4 border-red-600">
+              <span className="text-3xl mr-4">❌</span>
+              <div>
+                <p className="font-bold text-red-900 text-lg">Overbidding</p>
+                <p className="text-gray-900 font-medium">Count meld + realistic tricks. Going set is devastating!</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-8 mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Quick Reference</h2>
+        {/* Quick Reference */}
+        <div className="bg-white rounded-lg shadow-xl p-8 mb-8 border-4 border-green-700">
+          <h2 className="text-3xl font-bold text-green-900 mb-6 border-b-4 border-red-600 pb-2">
+            📋 Quick Reference
+          </h2>
 
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-blue-50 p-4 rounded-lg">
-              <h3 className="font-semibold text-gray-900 mb-2">Card Values (Tricks)</h3>
-              <ul className="text-sm text-gray-700 space-y-1">
-                <li>Ace = 1 point</li>
-                <li>Ten = 1 point</li>
-                <li>King = 1 point</li>
-                <li>Queen, Jack, 9 = 0 points</li>
-                <li>Last trick = 1 point</li>
+            <div className="bg-blue-50 p-6 rounded-lg border-4 border-blue-600">
+              <h3 className="font-bold text-blue-900 mb-3 text-xl">♠ Card Values (Tricks)</h3>
+              <ul className="text-gray-900 font-medium space-y-2">
+                <li className="flex items-start"><span className="text-blue-600 mr-2">♠</span><span>Ace = 1 point</span></li>
+                <li className="flex items-start"><span className="text-blue-600 mr-2">♠</span><span>Ten = 1 point</span></li>
+                <li className="flex items-start"><span className="text-blue-600 mr-2">♠</span><span>King = 1 point</span></li>
+                <li className="flex items-start"><span className="text-blue-600 mr-2">♠</span><span>Queen, Jack = 0 points</span></li>
+                <li className="flex items-start"><span className="text-blue-600 mr-2">♠</span><span>Last trick = 2 pts (4-player) / 3 pts (6-player)</span></li>
               </ul>
             </div>
 
-            <div className="bg-green-50 p-4 rounded-lg">
-              <h3 className="font-semibold text-gray-900 mb-2">Common Melds</h3>
-              <ul className="text-sm text-gray-700 space-y-1">
-                <li>Run (A-10-K-Q-J trump) = 15</li>
-                <li>Aces Around = 10</li>
-                <li>Kings Around = 8</li>
-                <li>Marriage (trump) = 4</li>
-                <li>Pinochle = 4</li>
+            <div className="bg-green-50 p-6 rounded-lg border-4 border-green-700">
+              <h3 className="font-bold text-green-900 mb-3 text-xl">♣ Common Melds</h3>
+              <ul className="text-gray-900 font-medium space-y-2">
+                <li className="flex items-start"><span className="text-green-700 mr-2">♣</span><span>Run (A-10-K-Q-J trump) = 15</span></li>
+                <li className="flex items-start"><span className="text-green-700 mr-2">♣</span><span>Aces Around = 10</span></li>
+                <li className="flex items-start"><span className="text-green-700 mr-2">♣</span><span>Kings Around = 8</span></li>
+                <li className="flex items-start"><span className="text-green-700 mr-2">♣</span><span>Marriage (trump) = 4</span></li>
+                <li className="flex items-start"><span className="text-green-700 mr-2">♣</span><span>Marriage (non-trump) = 2</span></li>
+                <li className="flex items-start"><span className="text-green-700 mr-2">♣</span><span>Pinochle = 4</span></li>
               </ul>
+            </div>
+
+            <div className="bg-purple-50 p-6 rounded-lg border-4 border-purple-600">
+              <h3 className="font-bold text-purple-900 mb-3 text-xl">♦ Bidding Rules</h3>
+              <ul className="text-gray-900 font-medium space-y-2">
+                <li className="flex items-start"><span className="text-purple-600 mr-2">♦</span><span>Minimum bid: 50</span></li>
+                <li className="flex items-start"><span className="text-purple-600 mr-2">♦</span><span>Below 60: Any increment</span></li>
+                <li className="flex items-start"><span className="text-purple-600 mr-2">♦</span><span>At 60+: Must increment by 5</span></li>
+                <li className="flex items-start"><span className="text-purple-600 mr-2">♦</span><span>No maximum bid</span></li>
+                <li className="flex items-start"><span className="text-red-600 mr-2">♥</span><span className="font-bold text-red-700">Must have marriage to bid!</span></li>
+              </ul>
+            </div>
+
+            <div className="bg-yellow-50 p-6 rounded-lg border-4 border-yellow-600">
+              <h3 className="font-bold text-yellow-900 mb-3 text-xl">Card Ranking</h3>
+              <p className="text-2xl font-bold text-gray-900 mb-2">A &gt; 10 &gt; K &gt; Q &gt; J</p>
+              <p className="text-red-700 font-bold">10 beats King!</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg shadow-md p-8 text-white text-center">
-          <h2 className="text-2xl font-bold mb-4">Ready to Play?</h2>
-          <p className="mb-6">
+        {/* Ready to Play CTA */}
+        <div className="bg-gradient-to-r from-red-700 via-blue-700 to-green-700 rounded-xl shadow-2xl p-8 text-white text-center border-4 border-white">
+          <h2 className="text-4xl font-bold mb-4 drop-shadow-lg">♠ ♥ Ready to Play? ♦ ♣</h2>
+          <p className="mb-6 text-xl font-semibold drop-shadow">
             Now that you know the basics, jump into a game and start practicing!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/auth/signup"
-              className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition"
+              className="bg-white text-red-700 px-8 py-4 rounded-lg font-bold hover:bg-gray-100 transition text-lg shadow-2xl border-4 border-red-700"
             >
               Create Account
             </Link>
             <Link
               href="/rules"
-              className="bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-800 transition border-2 border-white"
+              className="bg-blue-700 text-white px-8 py-4 rounded-lg font-bold hover:bg-blue-800 transition border-4 border-white text-lg shadow-2xl"
             >
               View Full Rules
             </Link>

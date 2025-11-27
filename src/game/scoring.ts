@@ -3,20 +3,30 @@ import { calculateMeldPoints } from "./melds"
 import { calculateTeamTrickPoints } from "./tricks"
 
 /**
- * Total trick points available in a round
- * 8 Aces (8 points) + 8 Tens (8 points) + 8 Kings (8 points) + Last trick (1 point) = 25 points
+ * Last trick bonus points (additional to cards in the trick)
+ * 4-player: 2 points
+ * 6-player: 3 points
  */
-export const TOTAL_TRICK_POINTS = 25
+export function getLastTrickBonus(numPlayers: number): number {
+  return numPlayers === 4 ? 2 : 3
+}
 
 /**
- * Bonus point for winning the last trick
+ * Total trick points available in a round (not including meld)
+ * 4-player (2 decks): 8A + 8T + 8K = 24 points + 2 last trick = 26 total
+ * 6-player (3 decks): 12A + 12T + 12K = 36 points + 3 last trick = 39 total
  */
-export const LAST_TRICK_BONUS = 1
+export function getTotalTrickPoints(numPlayers: number): number {
+  const numDecks = numPlayers === 4 ? 2 : 3
+  const pointCardCount = numDecks * 4 * 3 // (decks * suits * cards per suit: A,T,K)
+  const lastTrickBonus = getLastTrickBonus(numPlayers)
+  return pointCardCount + lastTrickBonus
+}
 
 /**
  * Calculates the meld score for a team
  */
-export function calculateTeamMeldScore(players: Player[], team: 1 | 2): number {
+export function calculateTeamMeldScore(players: Player[], team: 1 | 2 | 3): number {
   const teamPlayers = players.filter(p => p.team === team)
   return teamPlayers.reduce((total, player) => {
     return total + calculateMeldPoints(player.melds)
@@ -30,8 +40,9 @@ export function calculateTeamMeldScore(players: Player[], team: 1 | 2): number {
 export function calculateTeamScore(
   players: Player[],
   tricks: Trick[],
-  team: 1 | 2,
-  wonLastTrick: boolean
+  team: 1 | 2 | 3,
+  wonLastTrick: boolean,
+  numPlayers: number
 ): {
   meldPoints: number
   trickPoints: number
@@ -47,7 +58,7 @@ export function calculateTeamScore(
 
   // Add last trick bonus if they won it
   if (wonLastTrick) {
-    trickPoints += LAST_TRICK_BONUS
+    trickPoints += getLastTrickBonus(numPlayers)
   }
 
   return {
@@ -74,89 +85,96 @@ export function didTeamMakeBid(
 export function calculateRoundResult(
   players: Player[],
   tricks: Trick[],
-  biddingTeam: 1 | 2,
+  biddingTeam: 1 | 2 | 3,
   bidAmount: number,
   currentScores: TeamScore,
   targetScore: number
 ): {
   team1Score: number
   team2Score: number
+  team3Score?: number
   biddingTeamMadeBid: boolean
-  winner: 1 | 2 | null
+  winner: 1 | 2 | 3 | null
   gameOver: boolean
 } {
   // Determine who won the last trick
   const lastTrick = tricks[tricks.length - 1]
   const lastTrickWinner = lastTrick?.winner
-  const wonLastTrick = (team: 1 | 2) => {
+  const wonLastTrick = (team: 1 | 2 | 3) => {
     if (!lastTrickWinner) return false
     const winnerPlayer = players.find(p => p.id === lastTrickWinner)
     return winnerPlayer?.team === team
   }
 
-  // Calculate scores for both teams
-  const team1Result = calculateTeamScore(players, tricks, 1, wonLastTrick(1))
-  const team2Result = calculateTeamScore(players, tricks, 2, wonLastTrick(2))
+  // Calculate scores for all teams
+  const numPlayers = players.length
+  const numTeams = numPlayers === 4 ? 2 : 3
+
+  const team1Result = calculateTeamScore(players, tricks, 1, wonLastTrick(1), numPlayers)
+  const team2Result = calculateTeamScore(players, tricks, 2, wonLastTrick(2), numPlayers)
+  const team3Result = numTeams === 3 ? calculateTeamScore(players, tricks, 3, wonLastTrick(3), numPlayers) : null
 
   let team1Score = currentScores.team1.total
   let team2Score = currentScores.team2.total
+  let team3Score = currentScores.team3?.total ?? 0
 
   // Check if bidding team made their bid
-  const biddingTeamScore = biddingTeam === 1 ? team1Result.total : team2Result.total
-  const biddingTeamMadeBid = didTeamMakeBid(biddingTeamScore, bidAmount)
+  const biddingTeamResult = biddingTeam === 1 ? team1Result : biddingTeam === 2 ? team2Result : team3Result!
+  const biddingTeamMadeBid = didTeamMakeBid(biddingTeamResult.total, bidAmount)
 
   if (biddingTeamMadeBid) {
-    // Bidding team made their bid - they score their points
-    if (biddingTeam === 1) {
-      team1Score += team1Result.total
-    } else {
-      team2Score += team2Result.total
-    }
-
-    // Non-bidding team always scores their points
-    if (biddingTeam === 1) {
-      team2Score += team2Result.total
-    } else {
-      team1Score += team1Result.total
-    }
+    // Bidding team made their bid - all teams score their points
+    team1Score += team1Result.total
+    team2Score += team2Result.total
+    if (team3Result) team3Score += team3Result.total
   } else {
     // Bidding team went "set" - they lose the bid amount
     if (biddingTeam === 1) {
       team1Score -= bidAmount
-    } else {
+    } else if (biddingTeam === 2) {
       team2Score -= bidAmount
+    } else {
+      team3Score -= bidAmount
     }
 
-    // Non-bidding team still scores their points
-    if (biddingTeam === 1) {
-      team2Score += team2Result.total
-    } else {
-      team1Score += team1Result.total
-    }
+    // Non-bidding teams still score their points
+    if (biddingTeam !== 1) team1Score += team1Result.total
+    if (biddingTeam !== 2) team2Score += team2Result.total
+    if (team3Result && biddingTeam !== 3) team3Score += team3Result.total
   }
 
   // Check for winner
-  const gameOver = team1Score >= targetScore || team2Score >= targetScore
-  let winner: 1 | 2 | null = null
+  const scores = [
+    { team: 1 as 1 | 2 | 3, score: team1Score },
+    { team: 2 as 1 | 2 | 3, score: team2Score },
+    ...(numTeams === 3 ? [{ team: 3 as 1 | 2 | 3, score: team3Score }] : [])
+  ]
+
+  const teamsAtTarget = scores.filter(s => s.score >= targetScore)
+  const gameOver = teamsAtTarget.length > 0
+  let winner: 1 | 2 | 3 | null = null
 
   if (gameOver) {
-    if (team1Score >= targetScore && team2Score >= targetScore) {
-      // Both teams reached target - bidding team wins if they made their bid
-      if (biddingTeamMadeBid) {
+    if (teamsAtTarget.length === 1) {
+      // Only one team reached target
+      winner = teamsAtTarget[0].team
+    } else {
+      // Multiple teams reached target - bidding team wins if they made their bid
+      if (biddingTeamMadeBid && teamsAtTarget.some(t => t.team === biddingTeam)) {
         winner = biddingTeam
       } else {
-        winner = biddingTeam === 1 ? 2 : 1
+        // Highest scoring team wins
+        winner = teamsAtTarget.reduce((highest, current) =>
+          current.score > highest.score ? current : highest
+        ).team
       }
-    } else if (team1Score >= targetScore) {
-      winner = 1
-    } else {
-      winner = 2
     }
   }
 
   return {
     team1Score,
     team2Score,
+    ...(numTeams === 3 && { team3Score }),
     biddingTeamMadeBid,
     winner,
     gameOver
@@ -174,7 +192,7 @@ export function formatScore(score: number): string {
  * Gets a description of the round result
  */
 export function getRoundResultMessage(
-  biddingTeam: 1 | 2,
+  biddingTeam: 1 | 2 | 3,
   bidAmount: number,
   teamScore: number,
   madeBid: boolean

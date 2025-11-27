@@ -7,7 +7,6 @@ export enum Suit {
 }
 
 export enum Rank {
-  NINE = "9",
   JACK = "J",
   QUEEN = "Q",
   KING = "K",
@@ -41,7 +40,7 @@ export enum GameVariant {
 export interface Player {
   id: string
   name: string
-  team: 1 | 2
+  team: 1 | 2 | 3
   position: number
   hand: Card[]
   melds: Meld[]
@@ -63,9 +62,9 @@ export enum MeldType {
   DOUBLE_JACKS = "DOUBLE_JACKS",
   PINOCHLE = "PINOCHLE",
   DOUBLE_PINOCHLE = "DOUBLE_PINOCHLE",
+  TRIPLE_PINOCHLE = "TRIPLE_PINOCHLE",
   ROYAL_MARRIAGE = "ROYAL_MARRIAGE",
-  COMMON_MARRIAGE = "COMMON_MARRIAGE",
-  DIX = "DIX"
+  COMMON_MARRIAGE = "COMMON_MARRIAGE"
 }
 
 export interface Meld {
@@ -78,6 +77,7 @@ export interface Meld {
 export interface Bid {
   playerId: string
   amount: number | null // null means pass
+  meldSignal?: number // Optional: signal meld strength to partner (in 10s)
 }
 
 // Trick
@@ -91,19 +91,17 @@ export interface Trick {
 }
 
 // Team scores
+export interface TeamScoreData {
+  meld: number
+  tricks: number
+  total: number
+  gamesWon: number
+}
+
 export interface TeamScore {
-  team1: {
-    meld: number
-    tricks: number
-    total: number
-    gamesWon: number
-  }
-  team2: {
-    meld: number
-    tricks: number
-    total: number
-    gamesWon: number
-  }
+  team1: TeamScoreData
+  team2: TeamScoreData
+  team3?: TeamScoreData // Optional for 6-player games
 }
 
 // Game state
@@ -119,7 +117,7 @@ export interface GameState {
   currentBidderIndex: number
   winningBid: number | null
   winningBidderId: string | null
-  biddingTeam: 1 | 2 | null
+  biddingTeam: 1 | 2 | 3 | null
 
   // Trump
   trumpSuit: Suit | null
@@ -167,9 +165,9 @@ export const MELD_POINTS: Record<MeldType, number> = {
   [MeldType.DOUBLE_JACKS]: 40,
   [MeldType.PINOCHLE]: 4,
   [MeldType.DOUBLE_PINOCHLE]: 30,
+  [MeldType.TRIPLE_PINOCHLE]: 90,
   [MeldType.ROYAL_MARRIAGE]: 4,
-  [MeldType.COMMON_MARRIAGE]: 2,
-  [MeldType.DIX]: 1
+  [MeldType.COMMON_MARRIAGE]: 2
 }
 
 // Card point values for tricks
@@ -178,16 +176,15 @@ export const TRICK_CARD_POINTS: Record<Rank, number> = {
   [Rank.TEN]: 1,
   [Rank.KING]: 1,
   [Rank.QUEEN]: 0,
-  [Rank.JACK]: 0,
-  [Rank.NINE]: 0
+  [Rank.JACK]: 0
 }
 
 // Card ranking for trick-taking (higher number = higher rank)
+// A > 10 > K > Q > J
 export const CARD_RANK_VALUES: Record<Rank, number> = {
-  [Rank.ACE]: 6,
-  [Rank.TEN]: 5,
-  [Rank.KING]: 4,
-  [Rank.QUEEN]: 3,
-  [Rank.JACK]: 2,
-  [Rank.NINE]: 1
+  [Rank.ACE]: 5,
+  [Rank.TEN]: 4,
+  [Rank.KING]: 3,
+  [Rank.QUEEN]: 2,
+  [Rank.JACK]: 1
 }

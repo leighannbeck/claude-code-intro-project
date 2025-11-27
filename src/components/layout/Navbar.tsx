@@ -7,26 +7,32 @@ export default function Navbar() {
   const { data: session, status } = useSession()
 
   return (
-    <nav className="bg-gray-800 text-white shadow-lg">
+    <nav className="bg-gradient-to-r from-green-900 via-green-800 to-green-900 text-white shadow-2xl border-b-4 border-red-700">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-18">
           <div className="flex items-center space-x-8">
-            <Link href="/" className="text-2xl font-bold text-blue-400 hover:text-blue-300">
-              Pinochle Online
+            <Link href="/" className="text-3xl font-bold text-white hover:text-red-300 transition drop-shadow-lg py-4">
+              ♠ ♥ Pinochle Online ♦ ♣
             </Link>
-            <div className="hidden md:flex space-x-4">
-              <Link href="/rules" className="hover:text-blue-300 transition">
+            <div className="hidden md:flex space-x-6">
+              <Link href="/rules" className="text-white hover:text-red-300 transition font-bold text-lg">
                 Rules
               </Link>
-              <Link href="/how-to-play" className="hover:text-blue-300 transition">
+              <Link href="/how-to-play" className="text-white hover:text-blue-300 transition font-bold text-lg">
                 How to Play
+              </Link>
+              <Link href="/about" className="text-white hover:text-yellow-300 transition font-bold text-lg">
+                About
+              </Link>
+              <Link href="/contact" className="text-white hover:text-green-300 transition font-bold text-lg">
+                Contact
               </Link>
               {session && (
                 <>
-                  <Link href="/lobby" className="hover:text-blue-300 transition">
-                    Game Lobby
+                  <Link href="/play/lobby" className="text-white hover:text-blue-300 transition font-bold text-lg">
+                    ♣ Play Now
                   </Link>
-                  <Link href="/stats" className="hover:text-blue-300 transition">
+                  <Link href="/stats" className="text-white hover:text-yellow-300 transition font-bold text-lg">
                     My Stats
                   </Link>
                 </>
@@ -36,15 +42,15 @@ export default function Navbar() {
 
           <div className="flex items-center space-x-4">
             {status === "loading" ? (
-              <div className="text-gray-400">Loading...</div>
+              <div className="text-white font-bold">Loading...</div>
             ) : session ? (
               <>
-                <span className="text-gray-300">
-                  Welcome, {session.user.name}
+                <span className="text-white font-bold text-lg">
+                  Welcome, {session.user.name} ♥
                 </span>
                 <button
                   onClick={() => signOut()}
-                  className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded transition"
+                  className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 px-6 py-2 rounded-lg transition font-bold border-2 border-red-900 shadow-lg"
                 >
                   Sign Out
                 </button>
@@ -53,15 +59,15 @@ export default function Navbar() {
               <>
                 <Link
                   href="/auth/signin"
-                  className="hover:text-blue-300 transition"
+                  className="text-white hover:text-blue-300 transition font-bold text-lg border-b-2 border-transparent hover:border-blue-300"
                 >
                   Sign In
                 </Link>
                 <Link
                   href="/auth/signup"
-                  className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded transition"
+                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 px-6 py-2 rounded-lg transition font-bold border-2 border-blue-900 shadow-lg"
                 >
-                  Sign Up
+                  ♠ Sign Up
                 </Link>
               </>
             )}

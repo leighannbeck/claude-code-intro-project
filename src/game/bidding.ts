@@ -4,13 +4,13 @@ import { Bid } from "@/types/game"
  * Validates if a bid is legal given the current highest bid
  * @param bidAmount The bid amount to validate
  * @param currentHighestBid The current highest bid (null if no bids yet)
- * @param minimumBid The minimum starting bid (usually 20 or 25)
+ * @param minimumBid The minimum starting bid (default 50)
  * @returns true if the bid is valid
  */
 export function isValidBid(
   bidAmount: number,
   currentHighestBid: number | null,
-  minimumBid: number = 20
+  minimumBid: number = 50
 ): boolean {
   // If no bids yet, must be at least the minimum
   if (currentHighestBid === null) {
@@ -18,7 +18,18 @@ export function isValidBid(
   }
 
   // Must be higher than current highest bid
-  return bidAmount > currentHighestBid
+  if (bidAmount <= currentHighestBid) {
+    return false
+  }
+
+  // Once bid reaches 60, must increment by 5
+  if (currentHighestBid >= 60) {
+    // Bid must be in increments of 5
+    return bidAmount % 5 === 0
+  }
+
+  // Below 60, any increment is allowed
+  return true
 }
 
 /**
@@ -102,20 +113,23 @@ export function suggestBid(
   suggestedBid = Math.ceil(suggestedBid / 5) * 5
 
   // Ensure it's at least the minimum
-  return Math.max(suggestedBid, 20)
+  return Math.max(suggestedBid, 50)
 }
 
 /**
- * Gets the minimum bid increment (usually 1)
+ * Gets the minimum bid increment
+ * Below 60: increment by 1 (any amount)
+ * 60 and above: increment by 5
  */
 export const BID_INCREMENT = 1
+export const BID_INCREMENT_ABOVE_60 = 5
 
 /**
  * Gets the default minimum bid
  */
-export const DEFAULT_MINIMUM_BID = 20
+export const DEFAULT_MINIMUM_BID = 50
 
 /**
- * Gets the typical maximum bid (optional limit)
+ * Gets the threshold where bid increment changes to 5
  */
-export const TYPICAL_MAX_BID = 60
+export const BID_INCREMENT_THRESHOLD = 60

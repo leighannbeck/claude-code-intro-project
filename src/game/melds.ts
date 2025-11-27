@@ -17,14 +17,18 @@ export function findMelds(hand: Card[], trumpSuit: Suit): Meld[] {
     if (run) melds.push(run)
   }
 
-  // Check for double pinochle
-  const doublePinochle = findDoublePinochle(hand)
-  if (doublePinochle) {
-    melds.push(doublePinochle)
+  // Check for triple pinochle first, then double, then single
+  const triplePinochle = findTriplePinochle(hand)
+  if (triplePinochle) {
+    melds.push(triplePinochle)
   } else {
-    // Only check for single pinochle if no double
-    const pinochle = findPinochle(hand)
-    if (pinochle) melds.push(pinochle)
+    const doublePinochle = findDoublePinochle(hand)
+    if (doublePinochle) {
+      melds.push(doublePinochle)
+    } else {
+      const pinochle = findPinochle(hand)
+      if (pinochle) melds.push(pinochle)
+    }
   }
 
   // Check for around melds (doubles take priority)
@@ -63,10 +67,6 @@ export function findMelds(hand: Card[], trumpSuit: Suit): Meld[] {
   // Find all marriages
   const marriages = findAllMarriages(hand, trumpSuit)
   melds.push(...marriages)
-
-  // Find dix (9 of trump)
-  const dix = findDix(hand, trumpSuit)
-  if (dix) melds.push(dix)
 
   return melds
 }
@@ -221,6 +221,21 @@ function findDoublePinochle(hand: Card[]): Meld | null {
   return null
 }
 
+function findTriplePinochle(hand: Card[]): Meld | null {
+  const queensOfSpades = hand.filter(c => c.suit === Suit.SPADES && c.rank === Rank.QUEEN)
+  const jacksOfDiamonds = hand.filter(c => c.suit === Suit.DIAMONDS && c.rank === Rank.JACK)
+
+  if (queensOfSpades.length >= 3 && jacksOfDiamonds.length >= 3) {
+    return {
+      type: MeldType.TRIPLE_PINOCHLE,
+      cards: [...queensOfSpades.slice(0, 3), ...jacksOfDiamonds.slice(0, 3)],
+      points: MELD_POINTS[MeldType.TRIPLE_PINOCHLE]
+    }
+  }
+
+  return null
+}
+
 function findAllMarriages(hand: Card[], trumpSuit: Suit): Meld[] {
   const marriages: Meld[] = []
   const suits = Object.values(Suit)
@@ -246,20 +261,6 @@ function findAllMarriages(hand: Card[], trumpSuit: Suit): Meld[] {
   return marriages
 }
 
-function findDix(hand: Card[], trumpSuit: Suit): Meld | null {
-  const dix = hand.find(c => c.suit === trumpSuit && c.rank === Rank.NINE)
-
-  if (dix) {
-    return {
-      type: MeldType.DIX,
-      cards: [dix],
-      points: MELD_POINTS[MeldType.DIX]
-    }
-  }
-
-  return null
-}
-
 /**
  * Validates if a meld is still valid (all cards are still in hand)
  */
@@ -267,6 +268,45 @@ export function validateMeld(meld: Meld, hand: Card[]): boolean {
   return meld.cards.every(meldCard =>
     hand.some(handCard => handCard.id === meldCard.id)
   )
+}
+
+/**
+ * Checks if a player has at least one marriage (K+Q of same suit)
+ * Required to be able to bid
+ */
+export function hasMarriage(hand: Card[]): boolean {
+  const suits = Object.values(Suit)
+
+  for (const suit of suits) {
+    const hasKing = hand.some(c => c.suit === suit && c.rank === Rank.KING)
+    const hasQueen = hand.some(c => c.suit === suit && c.rank === Rank.QUEEN)
+
+    if (hasKing && hasQueen) {
+      return true
+    }
+  }
+
+  return false
+}
+
+/**
+ * Gets all suits where player has a marriage (K+Q)
+ * Used for trump selection - can only call trump in suits with marriage
+ */
+export function getSuitsWithMarriage(hand: Card[]): Suit[] {
+  const suits = Object.values(Suit)
+  const availableSuits: Suit[] = []
+
+  for (const suit of suits) {
+    const hasKing = hand.some(c => c.suit === suit && c.rank === Rank.KING)
+    const hasQueen = hand.some(c => c.suit === suit && c.rank === Rank.QUEEN)
+
+    if (hasKing && hasQueen) {
+      availableSuits.push(suit)
+    }
+  }
+
+  return availableSuits
 }
 
 /**
@@ -286,9 +326,9 @@ export function getMeldDescription(meld: Meld): string {
     [MeldType.DOUBLE_JACKS]: "Double Jacks Around",
     [MeldType.PINOCHLE]: "Pinochle (Q♠ J♦)",
     [MeldType.DOUBLE_PINOCHLE]: "Double Pinochle",
+    [MeldType.TRIPLE_PINOCHLE]: "Triple Pinochle",
     [MeldType.ROYAL_MARRIAGE]: "Royal Marriage (K-Q in trump)",
-    [MeldType.COMMON_MARRIAGE]: "Common Marriage (K-Q)",
-    [MeldType.DIX]: "Dix (9 of trump)"
+    [MeldType.COMMON_MARRIAGE]: "Common Marriage (K-Q)"
   }
 
   return `${typeDescriptions[meld.type]} (${meld.points} points)`

@@ -8,9 +8,9 @@ import {
   Bid,
   Trick
 } from "@/types/game"
-import { createPinochleDeck, shuffleDeck, dealCards } from "./deck"
+import { createMultipleDecks, shuffleDeck, dealCards } from "./deck"
 import { isValidBid, isBiddingComplete, getWinningBidder, getHighestBid } from "./bidding"
-import { findMelds } from "./melds"
+import { findMelds, hasMarriage, getSuitsWithMarriage } from "./melds"
 import {
   isValidPlay,
   determineTrickWinner,
@@ -36,16 +36,27 @@ export function createGame(
   }
 
   // Create players and assign teams
-  const players: Player[] = playerNames.map((name, index) => ({
-    id: `player-${index}`,
-    name,
-    team: (index % 2 === 0) ? 1 : 2, // Alternate teams
-    position: index,
-    hand: [],
-    melds: [],
-    tricksTaken: [],
-    isReady: false
-  }))
+  // 4-player: 2 teams (alternating 1, 2, 1, 2)
+  // 6-player: 3 teams (alternating 1, 2, 3, 1, 2, 3)
+  const players: Player[] = playerNames.map((name, index) => {
+    let team: 1 | 2 | 3
+    if (numPlayers === 4) {
+      team = (index % 2 === 0) ? 1 : 2
+    } else {
+      team = ((index % 3) + 1) as 1 | 2 | 3
+    }
+
+    return {
+      id: `player-${index}`,
+      name,
+      team,
+      position: index,
+      hand: [],
+      melds: [],
+      tricksTaken: [],
+      isReady: false
+    }
+  })
 
   return {
     id: gameId,
@@ -63,7 +74,10 @@ export function createGame(
     tricks: [],
     scores: {
       team1: { meld: 0, tricks: 0, total: 0, gamesWon: 0 },
-      team2: { meld: 0, tricks: 0, total: 0, gamesWon: 0 }
+      team2: { meld: 0, tricks: 0, total: 0, gamesWon: 0 },
+      ...(numPlayers === 6 && {
+        team3: { meld: 0, tricks: 0, total: 0, gamesWon: 0 }
+      })
     },
     targetScore,
     dealerIndex: 0,
@@ -73,11 +87,13 @@ export function createGame(
 
 /**
  * Starts a new round - deals cards and begins bidding
+ * 4-player uses 2 decks, 6-player uses 3 decks
  */
 export function startNewRound(gameState: GameState): GameState {
-  const deck = shuffleDeck(createPinochleDeck())
   const numPlayers = gameState.players.length
-  const hands = dealCards(deck, numPlayers as 4 | 6)
+  const numDecks = numPlayers === 4 ? 2 : 3 // 2 decks for 4-player, 3 for 6-player
+  const deck = shuffleDeck(createMultipleDecks(numDecks))
+  const hands = dealCards(deck, numPlayers as 4 | 6, gameState.dealerIndex)
 
   // Update players with their hands
   const updatedPlayers = gameState.players.map((player, index) => ({
@@ -87,18 +103,22 @@ export function startNewRound(gameState: GameState): GameState {
     tricksTaken: []
   }))
 
+  // Rotate dealer clockwise
+  const newDealerIndex = (gameState.dealerIndex + 1) % numPlayers
+
   return {
     ...gameState,
     phase: GamePhase.BIDDING,
     players: updatedPlayers,
     bids: [],
-    currentBidderIndex: (gameState.dealerIndex + 1) % numPlayers,
+    currentBidderIndex: (newDealerIndex + 1) % numPlayers, // Start bidding to left of dealer
     winningBid: null,
     winningBidderId: null,
     biddingTeam: null,
     trumpSuit: null,
     currentTrick: { cards: [], leadSuit: undefined },
     tricks: [],
+    dealerIndex: newDealerIndex,
     roundNumber: gameState.roundNumber + 1
   }
 }
@@ -122,6 +142,11 @@ export function processBid(
 
   // Validate bid if not passing
   if (bidAmount !== null) {
+    // Check if player has at least one marriage (required to bid)
+    if (!hasMarriage(currentPlayer.hand)) {
+      throw new Error("Must have at least one marriage (K+Q) to bid")
+    }
+
     const currentHighest = getHighestBid(gameState.bids)
     if (!isValidBid(bidAmount, currentHighest)) {
       throw new Error("Invalid bid amount")
@@ -166,6 +191,18 @@ export function processBid(
 export function declareTrump(gameState: GameState, trumpSuit: Suit): GameState {
   if (gameState.phase !== GamePhase.MELDING) {
     throw new Error("Not in melding phase")
+  }
+
+  // Get the winning bidder
+  const winningBidder = gameState.players.find(p => p.id === gameState.winningBidderId)
+  if (!winningBidder) {
+    throw new Error("Winning bidder not found")
+  }
+
+  // Validate that trump can only be declared in suits where player has K+Q
+  const availableSuits = getSuitsWithMarriage(winningBidder.hand)
+  if (!availableSuits.includes(trumpSuit)) {
+    throw new Error("Can only call trump in a suit where you have a marriage (K+Q)")
   }
 
   // Find melds for all players now that trump is declared
@@ -248,28 +285,41 @@ export function playCard(
         gameState.targetScore
       )
 
+      const newScores: any = {
+        team1: {
+          ...gameState.scores.team1,
+          total: result.team1Score,
+          gamesWon: result.winner === 1
+            ? gameState.scores.team1.gamesWon + 1
+            : gameState.scores.team1.gamesWon
+        },
+        team2: {
+          ...gameState.scores.team2,
+          total: result.team2Score,
+          gamesWon: result.winner === 2
+            ? gameState.scores.team2.gamesWon + 1
+            : gameState.scores.team2.gamesWon
+        }
+      }
+
+      // Add team3 scores for 6-player games
+      if (gameState.players.length === 6 && gameState.scores.team3 && result.team3Score !== undefined) {
+        newScores.team3 = {
+          ...gameState.scores.team3,
+          total: result.team3Score,
+          gamesWon: result.winner === 3
+            ? gameState.scores.team3.gamesWon + 1
+            : gameState.scores.team3.gamesWon
+        }
+      }
+
       return {
         ...gameState,
         players: updatedPlayers,
         currentTrick: { cards: [], leadSuit: undefined },
         tricks: completedTricks,
         phase: result.gameOver ? GamePhase.GAME_END : GamePhase.ROUND_END,
-        scores: {
-          team1: {
-            ...gameState.scores.team1,
-            total: result.team1Score,
-            gamesWon: result.winner === 1
-              ? gameState.scores.team1.gamesWon + 1
-              : gameState.scores.team1.gamesWon
-          },
-          team2: {
-            ...gameState.scores.team2,
-            total: result.team2Score,
-            gamesWon: result.winner === 2
-              ? gameState.scores.team2.gamesWon + 1
-              : gameState.scores.team2.gamesWon
-          }
-        }
+        scores: newScores
       }
     }
 

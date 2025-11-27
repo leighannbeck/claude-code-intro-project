@@ -54,18 +54,15 @@ export function isValidPlay(
       return false
     }
 
-    // Must play higher trump if partner is not currently winning
-    const partnerWinning = isPartnerWinning(trick)
-    if (!partnerWinning) {
-      const highestCardInTrick = getHighestCardInTrick(trick.cards, leadSuit, trumpSuit)
-      if (highestCardInTrick && highestCardInTrick.suit === trumpSuit) {
-        const higherTrumps = trumpCards.filter(c =>
-          CARD_RANK_VALUES[c.rank] > CARD_RANK_VALUES[highestCardInTrick.rank]
-        )
+    // Must play higher trump if possible (even if it beats your partner)
+    const highestCardInTrick = getHighestCardInTrick(trick.cards, leadSuit, trumpSuit)
+    if (highestCardInTrick && highestCardInTrick.suit === trumpSuit) {
+      const higherTrumps = trumpCards.filter(c =>
+        CARD_RANK_VALUES[c.rank] > CARD_RANK_VALUES[highestCardInTrick.rank]
+      )
 
-        if (higherTrumps.length > 0) {
-          return higherTrumps.some(c => c.id === card.id)
-        }
+      if (higherTrumps.length > 0) {
+        return higherTrumps.some(c => c.id === card.id)
       }
     }
 
@@ -78,6 +75,7 @@ export function isValidPlay(
 
 /**
  * Determines the winner of a completed trick
+ * Tie-breaker: If two cards are equal, the first one played wins
  * @param trick The completed trick
  * @param trumpSuit The trump suit
  * @returns The playerId of the winner
@@ -93,21 +91,21 @@ export function determineTrickWinner(trick: Trick, trumpSuit: Suit): string {
   const trumpsPlayed = trick.cards.filter(tc => tc.card.suit === trumpSuit)
 
   if (trumpsPlayed.length > 0) {
-    // Highest trump wins
+    // Highest trump wins (first card wins in case of tie)
     const highestTrump = trumpsPlayed.reduce((highest, current) =>
       CARD_RANK_VALUES[current.card.rank] > CARD_RANK_VALUES[highest.card.rank]
         ? current
-        : highest
+        : highest // Keep highest if equal (first card played)
     )
     return highestTrump.playerId
   }
 
-  // No trump played, highest card of led suit wins
+  // No trump played, highest card of led suit wins (first card wins in case of tie)
   const cardsOfLedSuit = trick.cards.filter(tc => tc.card.suit === leadSuit)
   const highestCard = cardsOfLedSuit.reduce((highest, current) =>
     CARD_RANK_VALUES[current.card.rank] > CARD_RANK_VALUES[highest.card.rank]
       ? current
-      : highest
+      : highest // Keep highest if equal (first card played)
   )
 
   return highestCard.playerId
@@ -151,16 +149,6 @@ function getHighestCardInTrick(
       ? current.card
       : highest
   , ledSuitCards[0].card)
-}
-
-/**
- * Checks if partner is currently winning the trick (simplified - needs player team info)
- * This is a placeholder that should be enhanced with actual team logic
- */
-function isPartnerWinning(trick: Trick): boolean {
-  // TODO: Implement proper partner checking based on teams
-  // For now, return false to be conservative
-  return false
 }
 
 /**

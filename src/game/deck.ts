@@ -1,8 +1,8 @@
 import { Card, Suit, Rank, CARD_RANK_VALUES } from "@/types/game"
 
 /**
- * Creates a standard Pinochle deck with 48 cards
- * (two copies of 9, 10, J, Q, K, A in each suit)
+ * Creates a standard Pinochle deck with 40 cards
+ * (two copies of 10, J, Q, K, A in each suit - no 9's)
  */
 export function createPinochleDeck(): Card[] {
   const deck: Card[] = []
@@ -26,6 +26,25 @@ export function createPinochleDeck(): Card[] {
 }
 
 /**
+ * Creates multiple Pinochle decks and combines them
+ * @param numDecks Number of decks to create (2 for 4-player, 3 for 6-player)
+ */
+export function createMultipleDecks(numDecks: number): Card[] {
+  const allCards: Card[] = []
+
+  for (let deckNum = 0; deckNum < numDecks; deckNum++) {
+    const deck = createPinochleDeck()
+    // Update IDs to include deck number for uniqueness
+    deck.forEach(card => {
+      card.id = `${card.suit}-${card.rank}-${card.id.split('-')[2]}-deck${deckNum}`
+    })
+    allCards.push(...deck)
+  }
+
+  return allCards
+}
+
+/**
  * Shuffles an array using Fisher-Yates algorithm
  */
 export function shuffleDeck(deck: Card[]): Card[] {
@@ -39,18 +58,37 @@ export function shuffleDeck(deck: Card[]): Card[] {
 
 /**
  * Deals cards to players
+ * Deal 4 cards at a time to each player in clockwise order
  * @param deck The shuffled deck
  * @param numPlayers Number of players (4 or 6)
+ * @param dealerIndex The position of the dealer (deals start to the left/clockwise)
  * @returns Array of hands, one for each player
  */
-export function dealCards(deck: Card[], numPlayers: 4 | 6): Card[][] {
+export function dealCards(deck: Card[], numPlayers: 4 | 6, dealerIndex: number = 0): Card[][] {
   const cardsPerPlayer = numPlayers === 4 ? 12 : 8
   const hands: Card[][] = Array.from({ length: numPlayers }, () => [])
 
-  for (let i = 0; i < deck.length; i++) {
-    const playerIndex = i % numPlayers
-    if (hands[playerIndex].length < cardsPerPlayer) {
-      hands[playerIndex].push(deck[i])
+  let deckIndex = 0
+  const cardsPerDeal = 4 // Deal 4 cards at a time
+
+  // Continue dealing until all players have their cards
+  while (hands.some(hand => hand.length < cardsPerPlayer)) {
+    // Start dealing from the player to the left of dealer (clockwise)
+    for (let offset = 1; offset <= numPlayers; offset++) {
+      const playerIndex = (dealerIndex + offset) % numPlayers
+
+      // Deal 4 cards to this player (or remaining cards needed)
+      const cardsToDeal = Math.min(cardsPerDeal, cardsPerPlayer - hands[playerIndex].length)
+
+      for (let i = 0; i < cardsToDeal && deckIndex < deck.length; i++) {
+        hands[playerIndex].push(deck[deckIndex])
+        deckIndex++
+      }
+
+      // Stop if this player has all their cards
+      if (hands[playerIndex].length >= cardsPerPlayer) {
+        continue
+      }
     }
   }
 
