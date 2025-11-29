@@ -30,25 +30,25 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="bg-gradient-to-br from-green-900 via-green-800 to-green-900 min-h-screen py-12">
+    <div className="bg-[#F2F2F2] min-h-screen py-12">
       {/* Decorative pattern overlay */}
       <div className="absolute inset-0 opacity-5 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,currentColor_10px,currentColor_20px)]"></div>
 
       <div className="container mx-auto px-4 max-w-4xl relative">
-        <h1 className="text-5xl font-bold text-white mb-8 text-center drop-shadow-lg">
+        <h1 className="text-5xl font-bold text-gray-900 mb-8 text-center drop-shadow-lg">
           ♣ Contact Us ♦
         </h1>
 
         <div className="grid md:grid-cols-2 gap-8 mb-8">
           {/* Get in Touch */}
-          <div className="bg-white rounded-xl shadow-2xl p-8 border-8 border-blue-700 relative">
+          <div className="bg-white rounded-xl shadow-2xl p-8 border-8 border-[#243CBF] relative">
             {/* Decorative corners */}
-            <div className="absolute top-0 left-0 w-12 h-12 border-t-4 border-l-4 border-red-600 rounded-tl-xl"></div>
-            <div className="absolute top-0 right-0 w-12 h-12 border-t-4 border-r-4 border-blue-600 rounded-tr-xl"></div>
-            <div className="absolute bottom-0 left-0 w-12 h-12 border-b-4 border-l-4 border-blue-600 rounded-bl-xl"></div>
-            <div className="absolute bottom-0 right-0 w-12 h-12 border-b-4 border-r-4 border-red-600 rounded-br-xl"></div>
+            <div className="absolute top-0 left-0 w-12 h-12 border-t-4 border-l-4 border-[#BF1736] rounded-tl-xl"></div>
+            <div className="absolute top-0 right-0 w-12 h-12 border-t-4 border-r-4 border-[#243CBF] rounded-tr-xl"></div>
+            <div className="absolute bottom-0 left-0 w-12 h-12 border-b-4 border-l-4 border-[#243CBF] rounded-bl-xl"></div>
+            <div className="absolute bottom-0 right-0 w-12 h-12 border-b-4 border-r-4 border-[#BF1736] rounded-br-xl"></div>
 
-            <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center border-b-4 border-blue-600 pb-3">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center border-b-4 border-[#243CBF] pb-3">
               ♠ Get in Touch ♥
             </h2>
             <p className="text-gray-900 mb-6 font-medium">
@@ -56,8 +56,8 @@ export default function ContactPage() {
             </p>
 
             <div className="space-y-4">
-              <div className="flex items-start bg-blue-50 p-4 rounded-lg border-2 border-blue-600">
-                <div className="bg-blue-600 rounded-full p-2 mr-4 shadow-md">
+              <div className="flex items-start bg-blue-50 p-4 rounded-lg border-2 border-[#243CBF]">
+                <div className="bg-[#243CBF] rounded-full p-2 mr-4 shadow-md">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
@@ -68,20 +68,20 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div className="flex items-start bg-green-50 p-4 rounded-lg border-2 border-green-600">
-                <div className="bg-green-600 rounded-full p-2 mr-4 shadow-md">
+              <div className="flex items-start bg-orange-50 p-4 rounded-lg border-2 border-[#A67D4B]">
+                <div className="bg-[#A67D4B] rounded-full p-2 mr-4 shadow-md">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-bold text-green-900">Response Time</h3>
+                  <h3 className="font-bold text-orange-900">Response Time</h3>
                   <p className="text-gray-900 font-medium">Within 24-48 hours</p>
                 </div>
               </div>
 
-              <div className="flex items-start bg-red-50 p-4 rounded-lg border-2 border-red-600">
-                <div className="bg-red-600 rounded-full p-2 mr-4 shadow-md">
+              <div className="flex items-start bg-red-50 p-4 rounded-lg border-2 border-[#BF1736]">
+                <div className="bg-[#BF1736] rounded-full p-2 mr-4 shadow-md">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
                   </svg>
@@ -95,29 +95,29 @@ export default function ContactPage() {
           </div>
 
           {/* Common Questions */}
-          <div className="bg-white rounded-xl shadow-2xl p-8 border-8 border-red-700 relative">
+          <div className="bg-white rounded-xl shadow-2xl p-8 border-8 border-[#BF1736] relative">
             {/* Decorative corners */}
-            <div className="absolute top-0 left-0 w-12 h-12 border-t-4 border-l-4 border-blue-600 rounded-tl-xl"></div>
-            <div className="absolute top-0 right-0 w-12 h-12 border-t-4 border-r-4 border-red-600 rounded-tr-xl"></div>
-            <div className="absolute bottom-0 left-0 w-12 h-12 border-b-4 border-l-4 border-red-600 rounded-bl-xl"></div>
-            <div className="absolute bottom-0 right-0 w-12 h-12 border-b-4 border-r-4 border-blue-600 rounded-br-xl"></div>
+            <div className="absolute top-0 left-0 w-12 h-12 border-t-4 border-l-4 border-[#243CBF] rounded-tl-xl"></div>
+            <div className="absolute top-0 right-0 w-12 h-12 border-t-4 border-r-4 border-[#BF1736] rounded-tr-xl"></div>
+            <div className="absolute bottom-0 left-0 w-12 h-12 border-b-4 border-l-4 border-[#BF1736] rounded-bl-xl"></div>
+            <div className="absolute bottom-0 right-0 w-12 h-12 border-b-4 border-r-4 border-[#243CBF] rounded-br-xl"></div>
 
-            <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center border-b-4 border-red-600 pb-3">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center border-b-4 border-[#BF1736] pb-3">
               ♦ Common Questions ♣
             </h2>
 
             <div className="space-y-4">
-              <div className="bg-blue-50 p-4 rounded-lg border-2 border-blue-600">
+              <div className="bg-blue-50 p-4 rounded-lg border-2 border-[#243CBF]">
                 <h3 className="font-bold text-blue-900 mb-1">How do I create an account?</h3>
                 <p className="text-gray-900 font-medium text-sm">Click the &quot;Sign Up&quot; button in the navigation bar and follow the registration process.</p>
               </div>
 
-              <div className="bg-green-50 p-4 rounded-lg border-2 border-green-600">
-                <h3 className="font-bold text-green-900 mb-1">Is Pinochle Online free?</h3>
+              <div className="bg-orange-50 p-4 rounded-lg border-2 border-[#A67D4B]">
+                <h3 className="font-bold text-orange-900 mb-1">Is Pinochle Online free?</h3>
                 <p className="text-gray-900 font-medium text-sm">Yes! Creating an account and playing games is completely free.</p>
               </div>
 
-              <div className="bg-red-50 p-4 rounded-lg border-2 border-red-600">
+              <div className="bg-red-50 p-4 rounded-lg border-2 border-[#BF1736]">
                 <h3 className="font-bold text-red-900 mb-1">Can I play with friends?</h3>
                 <p className="text-gray-900 font-medium text-sm">Absolutely! You can create private game rooms and invite your friends to join.</p>
               </div>
@@ -131,14 +131,14 @@ export default function ContactPage() {
         </div>
 
         {/* Contact Form */}
-        <div className="bg-white rounded-xl shadow-2xl p-10 border-8 border-green-700 relative">
+        <div className="bg-white rounded-xl shadow-2xl p-10 border-8 border-[#A67D4B] relative">
           {/* Decorative corners */}
-          <div className="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-blue-600 rounded-tl-xl"></div>
-          <div className="absolute top-0 right-0 w-16 h-16 border-t-4 border-r-4 border-red-600 rounded-tr-xl"></div>
-          <div className="absolute bottom-0 left-0 w-16 h-16 border-b-4 border-l-4 border-red-600 rounded-bl-xl"></div>
-          <div className="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-blue-600 rounded-br-xl"></div>
+          <div className="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-[#243CBF] rounded-tl-xl"></div>
+          <div className="absolute top-0 right-0 w-16 h-16 border-t-4 border-r-4 border-[#BF1736] rounded-tr-xl"></div>
+          <div className="absolute bottom-0 left-0 w-16 h-16 border-b-4 border-l-4 border-[#BF1736] rounded-bl-xl"></div>
+          <div className="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-[#243CBF] rounded-br-xl"></div>
 
-          <h2 className="text-4xl font-bold text-gray-900 mb-6 text-center border-b-4 border-green-600 pb-4">
+          <h2 className="text-4xl font-bold text-gray-900 mb-6 text-center border-b-4 border-[#A67D4B] pb-4">
             ♥ Send us a Message ♠
           </h2>
 
@@ -164,7 +164,7 @@ export default function ContactPage() {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border-2 border-gray-400 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-green-600 font-medium shadow"
+                    className="w-full px-4 py-3 border-2 border-gray-400 rounded-lg focus:ring-2 focus:ring-[#A67D4B] focus:border-[#A67D4B] font-medium shadow"
                     placeholder="Your name"
                   />
                 </div>
@@ -180,7 +180,7 @@ export default function ContactPage() {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border-2 border-gray-400 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-green-600 font-medium shadow"
+                    className="w-full px-4 py-3 border-2 border-gray-400 rounded-lg focus:ring-2 focus:ring-[#A67D4B] focus:border-[#A67D4B] font-medium shadow"
                     placeholder="your@email.com"
                   />
                 </div>
@@ -196,7 +196,7 @@ export default function ContactPage() {
                   required
                   value={formData.subject}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border-2 border-gray-400 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-green-600 font-medium shadow"
+                  className="w-full px-4 py-3 border-2 border-gray-400 rounded-lg focus:ring-2 focus:ring-[#A67D4B] focus:border-[#A67D4B] font-medium shadow"
                 >
                   <option value="">Select a subject</option>
                   <option value="general">General Inquiry</option>
@@ -220,14 +220,14 @@ export default function ContactPage() {
                   value={formData.message}
                   onChange={handleChange}
                   rows={6}
-                  className="w-full px-4 py-3 border-2 border-gray-400 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-green-600 resize-none font-medium shadow"
+                  className="w-full px-4 py-3 border-2 border-gray-400 rounded-lg focus:ring-2 focus:ring-[#A67D4B] focus:border-[#A67D4B] resize-none font-medium shadow"
                   placeholder="Tell us how we can help..."
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold px-8 py-4 rounded-lg transition border-4 border-green-900 shadow-2xl text-lg"
+                className="w-full bg-[#BF1736] hover:bg-[#2944D9] text-white font-bold px-8 py-4 rounded-lg transition border-4 border-gray-900 shadow-2xl text-lg"
               >
                 ♦ Send Message ♣
               </button>

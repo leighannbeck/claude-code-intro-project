@@ -47,18 +47,18 @@ export default function SignInPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-900 via-green-800 to-green-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#F2F2F2] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       {/* Decorative pattern overlay */}
       <div className="absolute inset-0 opacity-5 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,currentColor_10px,currentColor_20px)]"></div>
 
       <div className="max-w-md w-full space-y-8 relative">
         {/* Card-style form container */}
-        <div className="bg-white rounded-xl shadow-2xl p-8 border-8 border-blue-700 relative">
+        <div className="bg-white rounded-xl shadow-2xl p-8 border-8 border-[#243CBF] relative">
           {/* Decorative corners */}
-          <div className="absolute top-0 left-0 w-12 h-12 border-t-4 border-l-4 border-red-600 rounded-tl-xl"></div>
-          <div className="absolute top-0 right-0 w-12 h-12 border-t-4 border-r-4 border-blue-600 rounded-tr-xl"></div>
-          <div className="absolute bottom-0 left-0 w-12 h-12 border-b-4 border-l-4 border-blue-600 rounded-bl-xl"></div>
-          <div className="absolute bottom-0 right-0 w-12 h-12 border-b-4 border-r-4 border-red-600 rounded-br-xl"></div>
+          <div className="absolute top-0 left-0 w-12 h-12 border-t-4 border-l-4 border-[#BF1736] rounded-tl-xl"></div>
+          <div className="absolute top-0 right-0 w-12 h-12 border-t-4 border-r-4 border-[#243CBF] rounded-tr-xl"></div>
+          <div className="absolute bottom-0 left-0 w-12 h-12 border-b-4 border-l-4 border-[#243CBF] rounded-bl-xl"></div>
+          <div className="absolute bottom-0 right-0 w-12 h-12 border-b-4 border-r-4 border-[#BF1736] rounded-br-xl"></div>
 
           <div>
             <h2 className="mt-6 text-center text-4xl font-extrabold text-gray-900 mb-2">
@@ -66,7 +66,7 @@ export default function SignInPage() {
             </h2>
             <p className="mt-2 text-center text-sm text-gray-900 font-medium">
               Or{" "}
-              <Link href="/auth/signup" className="font-bold text-blue-700 hover:text-blue-900 border-b-2 border-blue-700 hover:border-blue-900">
+              <Link href="/auth/signup" className="font-bold text-[#243CBF] hover:text-[#2944D9] border-b-2 border-[#243CBF] hover:border-[#2944D9]">
                 create a new account
               </Link>
             </p>
@@ -74,7 +74,7 @@ export default function SignInPage() {
 
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             {error && (
-              <div className="bg-red-100 border-4 border-red-600 text-red-900 px-4 py-3 rounded-lg font-bold shadow-lg">
+              <div className="bg-red-100 border-4 border-[#BF1736] text-red-900 px-4 py-3 rounded-lg font-bold shadow-lg">
                 {error}
               </div>
             )}
@@ -92,7 +92,7 @@ export default function SignInPage() {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="appearance-none relative block w-full px-4 py-3 border-2 border-gray-400 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 sm:text-sm font-medium shadow"
+                  className="appearance-none relative block w-full px-4 py-3 border-2 border-gray-400 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#243CBF] focus:border-[#243CBF] sm:text-sm font-medium shadow"
                   placeholder="you@example.com"
                 />
               </div>
@@ -109,7 +109,7 @@ export default function SignInPage() {
                   required
                   value={formData.password}
                   onChange={handleChange}
-                  className="appearance-none relative block w-full px-4 py-3 border-2 border-gray-400 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 sm:text-sm font-medium shadow"
+                  className="appearance-none relative block w-full px-4 py-3 border-2 border-gray-400 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#243CBF] focus:border-[#243CBF] sm:text-sm font-medium shadow"
                   placeholder="Enter your password"
                 />
               </div>
@@ -121,7 +121,7 @@ export default function SignInPage() {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 text-blue-700 focus:ring-blue-600 border-gray-400 rounded"
+                  className="h-4 w-4 text-[#243CBF] focus:ring-[#243CBF] border-gray-400 rounded"
                 />
                 <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900 font-medium">
                   Remember me
@@ -129,7 +129,7 @@ export default function SignInPage() {
               </div>
 
               <div className="text-sm">
-                <a href="#" className="font-bold text-red-700 hover:text-red-900 border-b-2 border-red-700 hover:border-red-900">
+                <a href="#" className="font-bold text-[#BF1736] hover:text-[#2944D9] border-b-2 border-[#BF1736] hover:border-[#2944D9]">
                   Forgot password?
                 </a>
               </div>
@@ -139,7 +139,7 @@ export default function SignInPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="group relative w-full flex justify-center py-3 px-4 border-4 border-blue-900 text-base font-bold rounded-lg text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 disabled:bg-blue-400 disabled:cursor-not-allowed shadow-lg transition"
+                className="group relative w-full flex justify-center py-3 px-4 border-4 border-gray-900 text-base font-bold rounded-lg text-white bg-[#243CBF] hover:bg-[#2944D9] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#243CBF] disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg transition"
               >
                 {loading ? (
                   <span className="flex items-center">
@@ -158,7 +158,7 @@ export default function SignInPage() {
             <div className="text-center pt-4 border-t-2 border-gray-300">
               <p className="text-sm text-gray-900 font-medium">
                 Don&apos;t have an account?{" "}
-                <Link href="/auth/signup" className="font-bold text-blue-700 hover:text-blue-900 border-b-2 border-blue-700 hover:border-blue-900">
+                <Link href="/auth/signup" className="font-bold text-[#243CBF] hover:text-[#2944D9] border-b-2 border-[#243CBF] hover:border-[#2944D9]">
                   Sign up now
                 </Link>
               </p>

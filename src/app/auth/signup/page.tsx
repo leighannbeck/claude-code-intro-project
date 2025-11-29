@@ -88,18 +88,18 @@ export default function SignUpPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-900 via-green-800 to-green-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#F2F2F2] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       {/* Decorative pattern overlay */}
       <div className="absolute inset-0 opacity-5 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,currentColor_10px,currentColor_20px)]"></div>
 
       <div className="max-w-md w-full space-y-8 relative">
         {/* Card-style form container */}
-        <div className="bg-white rounded-xl shadow-2xl p-8 border-8 border-red-700 relative">
+        <div className="bg-white rounded-xl shadow-2xl p-8 border-8 border-[#BF1736] relative">
           {/* Decorative corners */}
-          <div className="absolute top-0 left-0 w-12 h-12 border-t-4 border-l-4 border-blue-600 rounded-tl-xl"></div>
-          <div className="absolute top-0 right-0 w-12 h-12 border-t-4 border-r-4 border-red-600 rounded-tr-xl"></div>
-          <div className="absolute bottom-0 left-0 w-12 h-12 border-b-4 border-l-4 border-red-600 rounded-bl-xl"></div>
-          <div className="absolute bottom-0 right-0 w-12 h-12 border-b-4 border-r-4 border-blue-600 rounded-br-xl"></div>
+          <div className="absolute top-0 left-0 w-12 h-12 border-t-4 border-l-4 border-[#243CBF] rounded-tl-xl"></div>
+          <div className="absolute top-0 right-0 w-12 h-12 border-t-4 border-r-4 border-[#BF1736] rounded-tr-xl"></div>
+          <div className="absolute bottom-0 left-0 w-12 h-12 border-b-4 border-l-4 border-[#BF1736] rounded-bl-xl"></div>
+          <div className="absolute bottom-0 right-0 w-12 h-12 border-b-4 border-r-4 border-[#243CBF] rounded-br-xl"></div>
 
           <div>
             <h2 className="mt-6 text-center text-4xl font-extrabold text-gray-900 mb-2">
@@ -107,7 +107,7 @@ export default function SignUpPage() {
             </h2>
             <p className="mt-2 text-center text-sm text-gray-900 font-medium">
               Or{" "}
-              <Link href="/auth/signin" className="font-bold text-red-700 hover:text-red-900 border-b-2 border-red-700 hover:border-red-900">
+              <Link href="/auth/signin" className="font-bold text-[#BF1736] hover:text-[#2944D9] border-b-2 border-[#BF1736] hover:border-[#2944D9]">
                 sign in to existing account
               </Link>
             </p>
@@ -115,7 +115,7 @@ export default function SignUpPage() {
 
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             {error && (
-              <div className="bg-red-100 border-4 border-red-600 text-red-900 px-4 py-3 rounded-lg font-bold shadow-lg">
+              <div className="bg-red-100 border-4 border-[#BF1736] text-red-900 px-4 py-3 rounded-lg font-bold shadow-lg">
                 {error}
               </div>
             )}
@@ -133,7 +133,7 @@ export default function SignUpPage() {
                   required
                   value={formData.username}
                   onChange={handleChange}
-                  className="appearance-none relative block w-full px-4 py-3 border-2 border-gray-400 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 sm:text-sm font-medium shadow"
+                  className="appearance-none relative block w-full px-4 py-3 border-2 border-gray-400 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#BF1736] focus:border-[#BF1736] sm:text-sm font-medium shadow"
                   placeholder="Choose a username"
                 />
                 <p className="mt-1 text-xs text-gray-700 font-medium">At least 3 characters</p>
@@ -151,7 +151,7 @@ export default function SignUpPage() {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="appearance-none relative block w-full px-4 py-3 border-2 border-gray-400 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 sm:text-sm font-medium shadow"
+                  className="appearance-none relative block w-full px-4 py-3 border-2 border-gray-400 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#BF1736] focus:border-[#BF1736] sm:text-sm font-medium shadow"
                   placeholder="you@example.com"
                 />
               </div>
@@ -168,7 +168,7 @@ export default function SignUpPage() {
                   required
                   value={formData.password}
                   onChange={handleChange}
-                  className="appearance-none relative block w-full px-4 py-3 border-2 border-gray-400 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 sm:text-sm font-medium shadow"
+                  className="appearance-none relative block w-full px-4 py-3 border-2 border-gray-400 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#BF1736] focus:border-[#BF1736] sm:text-sm font-medium shadow"
                   placeholder="Create a password"
                 />
                 <p className="mt-1 text-xs text-gray-700 font-medium">At least 6 characters</p>
@@ -186,7 +186,7 @@ export default function SignUpPage() {
                   required
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  className="appearance-none relative block w-full px-4 py-3 border-2 border-gray-400 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 sm:text-sm font-medium shadow"
+                  className="appearance-none relative block w-full px-4 py-3 border-2 border-gray-400 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#BF1736] focus:border-[#BF1736] sm:text-sm font-medium shadow"
                   placeholder="Confirm your password"
                 />
               </div>
@@ -199,13 +199,13 @@ export default function SignUpPage() {
                   name="terms"
                   type="checkbox"
                   required
-                  className="h-4 w-4 text-red-700 focus:ring-red-600 border-gray-400 rounded"
+                  className="h-4 w-4 text-[#BF1736] focus:ring-[#BF1736] border-gray-400 rounded"
                 />
               </div>
               <div className="ml-3 text-sm">
                 <label htmlFor="terms" className="font-bold text-gray-900">
                   I agree to the{" "}
-                  <a href="#" className="text-blue-700 hover:text-blue-900 border-b-2 border-blue-700 hover:border-blue-900">
+                  <a href="#" className="text-[#243CBF] hover:text-[#2944D9] border-b-2 border-[#243CBF] hover:border-[#2944D9]">
                     Terms and Conditions
                   </a>
                 </label>
@@ -216,7 +216,7 @@ export default function SignUpPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="group relative w-full flex justify-center py-3 px-4 border-4 border-red-900 text-base font-bold rounded-lg text-white bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600 disabled:bg-red-400 disabled:cursor-not-allowed shadow-lg transition"
+                className="group relative w-full flex justify-center py-3 px-4 border-4 border-gray-900 text-base font-bold rounded-lg text-white bg-[#BF1736] hover:bg-[#2944D9] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#BF1736] disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg transition"
               >
                 {loading ? (
                   <span className="flex items-center">
@@ -235,7 +235,7 @@ export default function SignUpPage() {
             <div className="text-center pt-4 border-t-2 border-gray-300">
               <p className="text-sm text-gray-900 font-medium">
                 Already have an account?{" "}
-                <Link href="/auth/signin" className="font-bold text-red-700 hover:text-red-900 border-b-2 border-red-700 hover:border-red-900">
+                <Link href="/auth/signin" className="font-bold text-[#BF1736] hover:text-[#2944D9] border-b-2 border-[#BF1736] hover:border-[#2944D9]">
                   Sign in here
                 </Link>
               </p>
